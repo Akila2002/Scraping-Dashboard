@@ -34,24 +34,24 @@
 
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  name: 'ScraperDashboard',
+  name: "ScraperDashboard",
   data() {
     return {
-      url: '',
+      url: "",
       scrapedData: [],
       page: 1,
       perPage: 5,
-      sortKey: '',
-      sortOrder: 'asc'
+      sortKey: "",
+      sortOrder: "asc",
     };
   },
   computed: {
     sortedData() {
       return [...this.scrapedData].sort((a, b) => {
-        if (this.sortOrder === 'asc') {
+        if (this.sortOrder === "asc") {
           return a[this.sortKey] > b[this.sortKey] ? 1 : -1;
         } else {
           return a[this.sortKey] < b[this.sortKey] ? 1 : -1;
@@ -65,42 +65,44 @@ export default {
     },
     totalPages() {
       return Math.ceil(this.scrapedData.length / this.perPage);
-    }
+    },
   },
   methods: {
     addUrl() {
       if (this.url) {
-        axios.post('/api/scrape', { url: this.url })
-          .then(response => {
+        axios
+          .post("/api/scrape", { url: this.url })
+          .then((response) => {
             const extractedData = {
               id: response.data.id,
               url: response.data.url,
               title: response.data.title,
-              description: response.data.description
+              description: response.data.description,
             };
             this.scrapedData.push(extractedData);
-            this.url = '';
+            this.url = "";
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(error);
           });
       }
     },
     fetchScrapedData() {
-      axios.get('/api/scrapedData')
-        .then(response => {
+      axios
+        .get("/api/scrapedData")
+        .then((response) => {
           this.scrapedData = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
     },
     sort(key) {
       if (this.sortKey === key) {
-        this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+        this.sortOrder = this.sortOrder === "asc" ? "desc" : "asc";
       } else {
         this.sortKey = key;
-        this.sortOrder = 'asc';
+        this.sortOrder = "asc";
       }
     },
     prevPage() {
@@ -112,11 +114,11 @@ export default {
       if (this.page < this.totalPages) {
         this.page++;
       }
-    }
+    },
   },
   mounted() {
     this.fetchScrapedData();
-  }
+  },
 };
 </script>
 
@@ -144,7 +146,7 @@ button {
   border: 1px solid #ddd;
   border-radius: 4px;
   cursor: pointer;
-  margin-bottom:5px;
+  margin-bottom: 5px;
 }
 
 table {
@@ -152,7 +154,8 @@ table {
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   padding: 10px;
   border: 1px solid #ddd;
   text-align: left;
@@ -172,6 +175,5 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
 </style>
 
