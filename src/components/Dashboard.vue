@@ -7,30 +7,33 @@
     </div>
     <button @click="fetchScrapedData">Fetch Scraped Data</button>
 
-    <table>
-      <thead>
-        <tr>
-          <th scope="col" @click="sort('url')">URL</th>
-          <th scope="col" @click="sort('title')">Title</th>
-          <th scope="col" @click="sort('description')">Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in paginatedData" :key="item.id">
-          <td>{{ item.url }}</td>
-          <td>{{ item.title }}</td>
-          <td>{{ item.description }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col" @click="sort('url')">URL</th>
+            <th scope="col" @click="sort('title')">Title</th>
+            <th scope="col" @click="sort('description')">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in paginatedData" :key="item.id">
+            <td>{{ item.url }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.description }}</td>
+          </tr>
+        </tbody>
+      </table>
 
-    <div class="pagination">
-      <button @click="prevPage" :disabled="page === 1">Previous</button>
-      <span>Page {{ page }} of {{ totalPages }}</span>
-      <button @click="nextPage" :disabled="page === totalPages">Next</button>
+      <div class="pagination">
+        <button @click="prevPage" :disabled="page === 1">Previous</button>
+        <span>Page {{ page }} of {{ totalPages }}</span>
+        <button @click="nextPage" :disabled="page === totalPages">Next</button>
+      </div>
     </div>
   </div>
 </template>
+
 
 
 <script>
@@ -123,57 +126,100 @@ export default {
 </script>
 
 <style scoped>
+/* Scoped styles for the Dashboard component */
 .dashboard {
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 20px;
 }
 
 .input-container {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 input {
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
   flex: 1;
-  margin-right: 10px;
+  margin-right: 15px;
+  font-size: 1em;
 }
 
 button {
-  padding: 10px 20px;
-  border: 1px solid #ddd;
+  padding: 12px 24px;
+  border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-bottom: 5px;
+  background-color: #007bff;
+  color: white;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.table-container {
+  margin-top: 20px; /* Add space between the button and the table */
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 10px; /* Space between table and other elements */
 }
 
 th,
 td {
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ddd;
   text-align: left;
 }
 
 th {
+  background-color: #f4f4f4;
   cursor: pointer;
 }
 
+th:hover {
+  background-color: #e9ecef;
+}
+
 .pagination {
-  margin-top: 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  font-size: 1em;
+  margin-top: 20px; /* Add space above pagination controls */
 }
 
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.pagination button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+}
+
+.pagination button:disabled {
+  background-color: #ddd;
+}
+
+.pagination span {
+  margin: 0 15px;
+  color: #333;
 }
 </style>
-
