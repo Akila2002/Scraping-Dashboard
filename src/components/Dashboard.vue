@@ -215,7 +215,7 @@ th:hover {
 }
 
 .pagination button:disabled {
-  background-color: #ddd;
+  background-color: #cfcece;
 }
 
 .pagination span {
